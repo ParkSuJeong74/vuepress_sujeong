@@ -1,0 +1,16 @@
+{
+    "name": "ParkSuJeong's devBlog",
+    "short_name": "ParkSuJeong's devBlog",
+    "start_url": "/?utm_source=homescreen",
+    "icons": [
+      {
+        "src": "images/title.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#FFFFFF",
+    "display": "fullscreen",
+    "orientation": "portrait"
+}
