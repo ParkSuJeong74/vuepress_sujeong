@@ -9,17 +9,24 @@ module.exports = {
     ],
     themeConfig: {
         logo: '/images/titleImage.jpg',
-        repo: "ParkSuJeong74/vuepress_parksujeong",
+        repo: "ParkSuJeong74/vuepress_sujeong",
         repoLabel: 'my-Repo',
-        docsRepo: 'ParkSuJeong74/vuepress_parksujeong',
+        docsRepo: 'ParkSuJeong74/vuepress_sujeong',
         editLinks: true,
         editLinkText: 'Improve this page!',
-        sidebar: 'auto',
+        smoothScroll: true,
+        sidebar: {
+            '/study/python/' : [
+                '',
+                'python2',
+                //'python3'
+            ],
+        },
         nav: [{ text: 'Home', link: '/' },
             {
                 text: 'Study',
                 items: [
-                    { text: 'Python', link: '/study/python'},
+                    { text: 'Python', link: '/study/python/'},
                     { text: 'Algorithm', link: '/study/algorithm'},
                     { text: 'Programming', link: '/study/programming'},
                     { text: 'Javascript', link: '/study/javascript'},
