@@ -19,7 +19,10 @@ module.exports = {
             '/study/python/' : [
                 '',
                 'python2',
-                //'python3'
+            ],
+            '/study/devOps/' : [
+                '',
+                'devOps2',
             ],
         },
         nav: [{ text: 'Home', link: '/' },
@@ -27,15 +30,17 @@ module.exports = {
                 text: 'Study',
                 items: [
                     { text: 'Python', link: '/study/python/'},
-                    { text: 'Algorithm', link: '/study/algorithm'},
+                    { text: 'DevOps', link: '/study/devOps/'},
+                    { text: 'CS', link: '/study/cs/'},
+                    { text: 'Algorithm', link: '/study/algorithm/'},
                     { text: 'Programming', link: '/study/programming'},
-                    { text: 'Javascript', link: '/study/javascript'},
-                    { text: 'backend', link: '/study/backend'},
+                    { text: 'Web', link: '/study/web/'},
+                    { text: 'Backend', link: '/study/backend'},
                     { text: 'Frontend', link: '/study/frontend'},
                     //{ text: 'DataEngineering', link: '/study/dataEngineering'},
                     //{ text: 'DataAnalysis', link: '/study/dataAnalysis'},
-                    { text: 'DevOps', link: '/study/devOps'},
-                    { text: 'CS', link: '/study/cs'},
+                    
+                    
                 ]
             },
             { text: 'Project', link: '/project/' },
