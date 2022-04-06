@@ -328,7 +328,7 @@ day=three
 a="hobby"
 a.count('b') # 2
 ```
-`find
+`find`
 ```python
 a="Life is too short"
 a.find('o') # 9
@@ -480,6 +480,10 @@ b.count(1) # 2
 b=[1,2,3]
 b.extend([4,5]) # [1,2,3,4,5]
 ```
+
+`len(arr)` 배열의 길이
+
+`sum(arr)` 배열 요소들의 합 
 
 :::tip
 리스트List : 표현법 []
@@ -721,6 +725,41 @@ b is a # False
 :::
 
 ## 제어문
+
+### if문
+
+```python
+pocket = ["paper", "money", "phone"]
+if "money" in pocket:
+    pass # 넘어가기
+elif card:
+    print("카드 쓰기") # money가 없고 card가 있음
+else:
+    print("걸어가기") # money와 card가 둘다 없음
+```
+
+if문에 자주 쓰이는 비교 연산자가 있다.
+
+`비교 연산자`
+|연산자|설명|
+|---|--|
+|<, >, ==, !=, >=, <=|보다/와 ~하면 참|
+|and, or, not|모두 참, 하나만 참, 거짓|
+|in, not in|리스트, 튜플, 문자열에 있으면 참/거짓|
+
+in은 포함되는 값이 있는지 검사한다.
+
+```python
+1 in [1,2,3] # True
+1 not in [1,2,3] # False
+```
+
+### while문
+
+dd
+
+### for문
+
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 :::danger
 danger 박스!

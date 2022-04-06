@@ -24,6 +24,14 @@ module.exports = {
                 '',
                 'devOps2',
             ],
+            '/column/' : [
+                '',
+                //'devOps2',
+            ],
+            '/study/algorithm/' : [
+                '',
+                'algorithm2'
+            ]
         },
         nav: [{ text: 'Home', link: '/' },
             {
@@ -31,20 +39,17 @@ module.exports = {
                 items: [
                     { text: 'Python', link: '/study/python/'},
                     { text: 'DevOps', link: '/study/devOps/'},
-                    { text: 'CS', link: '/study/cs/'},
                     { text: 'Algorithm', link: '/study/algorithm/'},
                     { text: 'Programming', link: '/study/programming'},
                     { text: 'Web', link: '/study/web/'},
                     { text: 'Backend', link: '/study/backend'},
                     { text: 'Frontend', link: '/study/frontend'},
-                    //{ text: 'DataEngineering', link: '/study/dataEngineering'},
-                    //{ text: 'DataAnalysis', link: '/study/dataAnalysis'},
-                    
-                    
+                    { text: 'DataAnalysis', link: '/study/dataAnalysis'},
+                    { text: 'CS', link: '/study/cs/'},
                 ]
             },
             { text: 'Project', link: '/project/' },
-            { text: 'Tags', link: '/_tags/' },
+            { text: 'Column', link: '/column/'},
             { text: 'Contact', link: '/contact/' }
         ]
     },

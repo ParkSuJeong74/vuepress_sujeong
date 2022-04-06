@@ -14,6 +14,14 @@ sidebarDepth: 2
 - HSTS 목록 조회
 
 
+### TCP와 UDP
+데이터를 전달하기 위해 사용하는 프로토콜로, 전송 계층에 해당.
+
+TCP(Transmission Control Protocol) : 연결 지향형 프로토콜
+
+UDP(User Datagram Protocol) : 데이터를 데이터그램단위로 전송하는 프로토콜
+
+
 ## 운영체제
 ### 코딩테스트 출제 경향 분석 및 파이썬 문법 부수기
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
