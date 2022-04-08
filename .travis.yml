@@ -1,17 +1,18 @@
 language: node_js
-os: linux
 node_js:
-- lts/*
+  - lts/*
+
 install:
-- yarn install
+  - yarn install
+
 script:
-- yarn docs:build
+  - yarn build
+
 deploy:
   provider: pages
-  skip-cleanup: true
-  local_dir: docs/.vuepress/dist/
-  target-branch: gh-pages
-  github-token: $GITHUB_ACCESS_TOKEN
+  skip_cleanup: true
+  local_dir: docs/.vuepress/dist
+  github_token: $GITHUB_TOKEN # Travis CI에 등록한 토큰을 가져와 사용
   keep_history: true
   on:
-    branch: master
+    branch: master # master 브랜치에서만 동작하도록 설정
