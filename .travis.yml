@@ -8,10 +8,10 @@ script:
 - yarn docs:build
 deploy:
   provider: pages
-  edge: true
+  skip-cleanup: true
   local_dir: docs/.vuepress/dist/
-  token:
-    secure: $GITHUB_TOKEN
+  target-branch: gh-pages
+  github-token: $GITHUB_ACCESS_TOKEN
   keep_history: true
   on:
     branch: master
