@@ -1,9 +1,9 @@
 module.exports = {
+    base: '/vuepress_sujeong/',
     title: 'ParkSuJeong\'s devBlog',
     description: 'Hello World!',
     email: 'sujeong9158@gmail.com',
     lang: 'ko-KR',
-    base: '/vuepress_sujeong/',
     head: [
         ['link', {rel: 'icon', href: `/images/title.png`}],
         ['link', {rel: 'manifest', href: '/manifest.json'}],
