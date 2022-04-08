@@ -7,7 +7,7 @@ install:
   - yarn install
 
 script:
-  - yarn build docs
+  - yarn docs:build
 
 deploy:
   provider: pages
