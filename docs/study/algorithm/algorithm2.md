@@ -151,7 +151,7 @@ def postorder(tree) :
     return result
 ```
 
-> 이진트리 만들기
+> 이진트리 만들기(수정해야함12-02-1 실습3)
 
 ```python
 # 어떤 트리의 루트 노드를 가지고 있음
@@ -234,16 +234,293 @@ ii. 이진 탐색 : `O(log(2)n)` 항상 정렬된 상태 유지, 어떤 정점�
 이 경우 높이는 3이다. DFS로 순회하다보면 리프 노드에 도달하게 되는데, 이때 각 노드가 루트 노드로 부터 얼마나 떨어져 있는지 계산하여 가장 큰 값에 1을 더하면 높이를 계산할 수 있다.
 
 ```python
-
-
+def getHeight(myTree) :
+    if myTree == None:
+        return 0
+    else:
+        return 1+max(getHeight(myTree.left), getHeight(myTree.right))
 ```
 
 너비 구하기
 
 `레벨` 깊이가 같은 노드들의 집합
 
-너비가 가장 큰 레벨과 그 레벨의 너비를 계산한다. 루트 노드부터 1로 시작한다. 같은 레벨이 노드는 같은 행에 위치하고 한 열에는 하나의 정점만 위치한다. 
+너비가 가장 큰 레벨과 그 레벨의 너비를 계산한다. 루트 노드부터 1로 시작한다. 같은 레벨이 노드는 같은 행에 위치하고 한 열에는 하나의 정점만 위치한다.
+
+한 정점의 왼쪽 서브 트리의 정점들은 모두 그 정점보다 왼쪽의 열에 위치하고 오른쪽 서브 트리의 정점들은 모두 그 정점보다 오른쪽 열에 위치해야한다.
 
 ![image](https://user-images.githubusercontent.com/71163016/162399959-3b2f1536-648b-4a0a-9878-82f636f9fc67.png)
 
-한 정점의 왼쪽 서브 트리의 정점들은 모두 그 정점보다 왼쪽의 열에 위치하고 오른쪽 서브 트리의 정점들은 모두 그 정점보다 오른쪽 열에 위치해야한다.
+가장 큰 너비는 레벨 2의 4이다. 깊이를 구하면서 행을 구할 수 있을까?
+
+왼쪽 서브 트리의 정점들의 열이 모두 확정되었다면 그 정점의 열도 확정이 가능하다. 그리고 오른쪽 서브 트리의 정점들의 위치를 계산한다. 즉 중위 순회를 사용한다.
+
+
+> (수정해야함12-02-1 실습5)
+```python
+# tree.py
+class Tree:
+    def __init__(self, i, l, r) :
+        self.index = i
+        self.left = l
+        self.right = r
+        self.depth = -1
+
+    def setDepth(d):
+        self.depth = d
+
+    def addNode(self, i, l, r) :
+        if self.index == None or self.index == i :
+            self.index = i
+            self.left = Tree(l, None, None) if l != None else None
+            self.right = Tree(r, None, None) if r != None else None
+            return True
+
+        else :
+            flag = False
+
+            if self.left != None :
+                flag = self.left.addNode(i, l, r)
+
+            if flag == False and self.right != None :
+                flag = self.right.addNode(i, l, r)
+
+            return flag
+
+# getWidth.py
+def inorder(tree, depth):
+    result=[]
+    if tree.left != None:
+        result += inorder(tree.left, depth+1)
+    tree.setDepth(depth)
+    result.append(tree)
+    if tree.right != None:
+        result += inorder(tree.right, depth+1)
+
+def getWidth(myTree) :
+
+    result = inorder(myTree, 1)
+    n=len(result)
+
+    # 정점의 갯수는 1000개 이하
+    # 깊이의 최댓값은 1000
+    left = [1001 for i in range(1001)]
+    right = [-1 for i in range(1001)]
+    maxDepth = 0
+
+    for i in range(n):
+        d=result[i].depth
+        left[d] = min(left[d], i)
+        right[d] = max(left[d], i)
+
+        maxDepth = max(maxDepth, d)
+
+    ansDepth = 0
+    ans = 0
+
+    for i in range(1, maxDepth+1):
+        temp right
+    return (0, 0)
+
+```
+
+## 우선순위 큐와 힙Heap
+
+우선순위가 높은 원소가 먼저 출력되는 추상적 자료형
+
+우선순위 큐를 단순하게 배열로 구현한다면 입력은 O(1), 출력은 O(n)의 시간 복잡도를 가진다. 우선순위가 가장 높은 원소를 찾는 과정과 제거하는 과정이 비효율적이다.
+
+### 힙Heap
+
+최솟값 또는 최댓값을 빠르게 찾기 위해 고안된 완전 이진 트리이다.
+
+`최대 힙Max Heap` 부모 노드는 항상 자식 노드보다 큰 값을 가진다.
+
+`최소 힙Min Heap` 부모 노드는 항상 자식 노드보다 작은 값을 가진다.
+
+```python
+import heapq # 최소 힙을 사용할 수 있다.
+```
+최소힙으로 최대힙을 사용하려면 값을 저장할 때 -1을 곱한 값을 저장하면 된다. -1d을 곱함으로써 최댓값과 최솟값이 반전되는 것이다. 이 방법은 힙이 저장하는 값이 수number일때만 유효하다.
+
+힙은 완전 이진 트리의 특성을 유지해야한다. 항상 입력된 자료는 마지막 레벨의 가장 오른쪽 자리에 채워진다.
+
+![image](https://user-images.githubusercontent.com/71163016/162444753-27b71962-16e6-4af2-b0fa-24da73a502df.png)
+
+부모 노드가 자신보다 작을때까지 자리를 변경하는 것이다.
+
+즉, 부모 노드와의 대소관계와 완전 이진 트리의 특성을 유지한채 자료를 입력하면 된다.
+
+최악의 경우 새로운 최솟값이 입력되는 경우 루트 노드까지 거슬러 올라간다. 이때의 연산속도는 트리의 높이와 비례하여 시간복잡도는 O(log(2)n)이다.
+
+출력을 할때는 무조건 루트 노드부터 한다.
+
+> 최소 힙 구현 : no heapq(설명 다시 12-02-2 실습1)
+
+```python
+class PriorityQueue:
+    def __init__(self) :
+        self.data = [0]
+
+    def push(self, value) :
+        # value 삽입
+        self.data.append(value)
+        index=len(self.data) - 1
+        
+        # 루트 노드가 되면 종료
+        while index != 1:
+            if self.data[index//2] > self.data[index] : # 부모와 자식 자리 바꿈
+                temp = self.data[index]
+                self.data[index] = self.data[index//2]
+                self.data[index//2] = temp
+                index = index//2
+            else:
+                break
+
+    def pop(self) :
+        # 우선순위가 가장 높은 원소를 제거합니다.
+        if len(self.data) == 1:
+            return
+
+        # 마지막 노드를 루트 노드 자리로
+        self.data[1] = self.data[-1]
+        self.data.pop()
+        index = 1
+        while True:
+            priority = -1
+            # 아무 자식도 없는 경우
+            if len(self.data) -1 < index * 2:
+                break
+            # 왼쪽 자식만 있는 경우
+            elif len(self.data) -1 < index * 2 +1:
+                priority = index * 2
+            else:
+                if self.data[index*2] < self.data[index*2 + 1]:
+                    priority = index*2
+                else:
+                    priority = index*2 +1
+            if self.data[index] > self.data[priority]:
+                temp=self.data[index]
+                self.data[index] = self.data[priority]
+                self.data[priority] = temp
+
+                index = priority
+            else:
+                break
+
+    def top(self) :
+        #우선순위가 가장 높은 원소를 반환합니다. 만약 우선순위 큐가 비어있다면 -1을 반환합니다.
+        if len(self.data) == 1:
+            return -1
+        else:
+            return self.data[1]
+```
+
+> 최소 힙 구현 : heapq(설명 다시 12-02-2 실습1)
+
+```python
+import heapq
+
+class PriorityQueue:
+    def __init__(self) :
+        self.data = []
+
+    def push(self, value) :
+        heapq.heappush(self.data, value)
+
+    def pop(self) :
+        if len(self.data) > 0:
+            heapq.heappop(self.data)        
+
+    def top(self) :
+        if len(self.data) == 0:
+            return -1
+        else:
+            return self.data[0]
+```
+
+> 최대 힙 구현 : heapq(설명 다시 12-02-2 실습2)
+
+```python
+import heapq
+
+class PriorityQueue:
+    def __init__(self) :
+        self.data = []
+
+    def push(self, value) :
+        heapq.heappush(self.data, -value)
+
+    def pop(self) :
+        if len(self.data) > 0:
+            heapq.heappop(self.data)        
+
+    def top(self) :
+        if len(self.data) == 0:
+            return -1
+        else:
+            return -self.data[0]
+```
+
+> 절댓값 힙 구현 : heapq(설명 다시 12-02-2 실습3)
+
+```python
+import heapq
+
+class PriorityQueue:
+    def __init__(self) :
+        self.data = []
+
+    def push(self, value) :
+        # 힙에 정수 x를 저장할 때 (x의 절댓값, x의 값) 형태의 튜플을 저장하는 방법으로 구현
+        heapq.heappush(self.data, (abs(value), value))
+    def pop(self) :
+        if len(self.data) > 0:
+            heapq.heappop(self.data)        
+
+    def top(self) :
+        if len(self.data) == 0:
+            return -1
+        else:
+            return self.data[0][1]
+```
+
+> 힙정렬 구현 : heapq(설명 다시 12-02-2 실습4)
+
+```python
+import heapq
+class PriorityQueue:
+    def __init__(self) :
+        self.data = []
+
+    def push(self, value) :
+        heapq.heappush(self.data, value)
+
+    def pop(self) :
+        if len(self.data) > 0:
+            heapq.heappop(self.data)  
+            
+    def top(self) :
+        if len(self.data) == 0:
+            return -1
+        else:
+            return self.data[0]          
+
+def heapSort(items) :
+# items에 있는 원소를 heap sort하여 리스트로 반환하는 함수를 작성하세요.
+    result = []
+
+    pq = PriorityQueue()
+    for item in items:
+        pq.push(item)
+
+    for i in range(len(items)):
+        result.append(pq.top())
+        pq.pop()
+
+    return result
+```
+
+> 자료 구조 문제집, 우선순위 큐와 힙 실습 5,6
+
+

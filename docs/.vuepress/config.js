@@ -32,6 +32,10 @@ module.exports = {
             '/study/algorithm/' : [
                 '',
                 'algorithm2'
+            ],
+            '/study/dataAnalysis/' : [
+                '',
+                //'dataAnalysis2'
             ]
         },
         nav: [{ text: 'Home', link: '/' },
@@ -45,7 +49,7 @@ module.exports = {
                     { text: 'Web', link: '/study/web/'},
                     { text: 'Backend', link: '/study/backend'},
                     { text: 'Frontend', link: '/study/frontend'},
-                    { text: 'DataAnalysis', link: '/study/dataAnalysis'},
+                    { text: 'DataAnalysis', link: '/study/dataAnalysis/'},
                     { text: 'CS', link: '/study/cs/'},
                 ]
             },

@@ -4,11 +4,79 @@ sidebarDepth: 2
 ---
 # Algorithm
 
-`엘리스` 알고리즘 스터디 강의와 11주차 강의 내용 일부가 포함됩니다. 이 외 검색 등으로 알게된 내용도 추가될 예정입니다.
+`엘리스`
+1. 알고리즘 스터디
+ - 알고리즘 스타1
+ - 알고리즘 스타2
+ - 알고리즘을 위한 자료구조
+ - 동적 계획법, 그래프 알고리즘
+ - 파이썬 알고리즘
+2. 11주차
+ - (11-5) 자료구조의 개념, 스택과 큐
+3. 12주차
+ - (12-2) 트리, 우선순위 큐와 힙
+ - (12-4) 재귀호출과 문제해결 절차
+ - (12-5) 분할정복법, 탐욕적 기법
 
 ## 알고리즘
 
-알고리즘은 문제 해결의 절차 혹은 방법을 뜻한다.
+알고리즘은 문제 해결의 절차 혹은 방법을 뜻한다. 순서도와 의사코드로 나타낼 수 있다.
+
+![image](https://user-images.githubusercontent.com/71163016/162559911-2d094c9f-e367-40ab-9c50-939650ea8a32.png)
+
+계산을 통해 해결할 수 있는 문제, 즉 컴퓨터로 해결할 수 있는 문제이다.
+
+유한성(유한한 횟수를 반복하고 종료해야함), 명확성(단계가 명확하게 정의되야함), 입력(0개 이상), 출력(1개 이상), 효과성(효율적이고 의미가 있어야함)의 특성을 가진다.
+
+> k번째 수 찾기
+```python
+def findKth(myInput, k) :
+    # 매 순간마다 k번째로 작은 원소를 리스트로 반환합니다.
+    data=[]
+    result = []
+    for element in myInput:
+        data.append(element)
+        data.sort()
+
+        if len(data) < k:
+            result.append(-1)
+        else:
+            result.append(data[k-1])
+
+    return result
+
+def main():
+    firstLine = [int(x) for x in input("n과 k를 입력하세요 (예시:10 3): ").split()]
+    myInput = [int(x) for x in input("n개의 숫자를 차례대로 입력하세요 (예시:1 9 8 5 2 3 5 6 2 10): ").split()]
+
+    print('정렬 결과: ', *findKth(myInput, firstLine[1]))
+```
+
+> 문제 해결의 절차
+
+i. 문제 이해
+ii. 문제 해결을 위한 알고리즘 개발
+iii. 논리적으로 증명
+iv. 제한시간 내에 동작한다는 것을 확인
+v. 코드로 작성
+
+> 시간 복잡도
+
+대략 몇개의 명령을 수행하는가? 프로그램의 수행 시간을 유추할 수 있다.
+
+Big-O는 최악의 경우 연산 시간을 나타낸다.
+
+
+### 수학적 귀납법
+
+명제 P(n)을 증명하는 방법
+
+i. N=1 일때 성립함을 보임
+ii. P(k)가 성립한다고 가정할 때 P(k+1)이 성립함을 보임
+iii. 모든 자연수 n에 대해 P(n)이 성립
+
+
+
 
 ### 재귀 호출
 재귀 호출은 함수 내부에서 자기 자신을 호출하는 방법이다. 함수에서만 사용되기 때문에 재귀 호출 함수, 또는 재귀 함수라고 불린다.
@@ -149,6 +217,37 @@ def main():
 ```
 
 
+> 퀵 정렬
+
+```python
+def quickSort(array):
+    '''
+    퀵정렬을 통해 오름차순으로 정렬된 array를반환하는 함수를 작성하세요.
+    '''
+    if len(array) <= 1:
+        return array 
+    pivot=array[0]
+    
+    left=getSmall(array[1:], pivot)
+    right=getLarge(array[1:], pivot)
+    
+    return quickSort(left) + [pivot] + quickSort(right)
+    
+def getSmall(array, pivot):
+    data=[]
+    for a in array:
+        if a<= pivot:
+            data.append(a)
+    return data
+    
+def getLarge(array, pivot):
+    data=[]
+    for a in array:
+        if a>= pivot:
+            data.append(a)
+    return data
+```
+
 ### 완전 탐색
 
 가능한 모든 경우를 살펴보는 과정을 완전 탐색이라고 한다. 브루트포스Brute-Force(무식하게 푼다) Search라고도 한다.
@@ -255,6 +354,35 @@ def main():
     print(cnt)
 ```
 
+`거스름돈`
+
+```python
+import sys
+
+def coinChange(n) :
+    '''
+    n원을 돌려주기 위해 필요한 동전 개수의 최솟값을 반환하는 함수를 작성하세요.
+    '''
+    coins=[100,50,10,5,1]
+    count=0
+
+    for coin in coins:
+        # 100원부터
+        if n//coin >= 1:
+            count = count+n//coin
+            n=n%coin
+    return count
+
+def main():
+    '''
+    이 부분은 수정하지 마세요.
+    '''
+
+    n = int(input())
+
+    print(coinChange(n))
+```
+
 `강아지 식사 방 만들기`
 
 n 마리 강아지들이 강아지 한 마리당 방 한 칸을 사용해서 식사하도록 하려면, 최소 몇 개의 강아지 식사 방이 필요할까요?
@@ -274,10 +402,12 @@ n 마리 강아지들이 강아지 한 마리당 방 한 칸을 사용해서 식
 ```python
 def minimumRoomNeeded(times):
     rooms = []
+    sortedTimes = sorted(times)
     # 최소 식사 방의 개수를 구해주세요.
-    for time in times:
+
+    for time in sortedTimes:
         rooms.append(time[1])
-        if rooms[0] <= time[0]:
+        if rooms[0] <= time[0] and time[0] != 1:
             rooms.sort()
             rooms.pop(0)
     return len(rooms)
