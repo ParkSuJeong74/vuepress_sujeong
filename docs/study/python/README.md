@@ -4,8 +4,6 @@ sidebarDepth: 2
 ---
 # Python Programming
 
-:white_check_mark: 
-
 `점프 투 파이썬`
 
 전체 내용 정리

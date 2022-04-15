@@ -10,6 +10,7 @@ sidebarDepth: 2
 2. 5주차
 3. 6주차
 4. 백엔드 스터디
+5. [NestJs Course for Beginners - Create a REST API](https://www.youtube.com/watch?v=GHTA143_b-s&t=11131s&ab_channel=freeCodeCamp.org&loop=0)
 
 ## 파이썬이란?
 
