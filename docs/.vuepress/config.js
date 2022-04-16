@@ -24,10 +24,7 @@ module.exports = {
         //'devOps2',
       ],
       "/study/algorithm/": ["", "algorithm2"],
-      "/study/dataAnalysis/": [
-        "",
-        //'dataAnalysis2'
-      ],
+      "/study/dataAnalysis/": ["", "dataAnalysis2"],
       "/study/backend/": [
         "",
         //'dataAnalysis2'
