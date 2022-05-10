@@ -12,7 +12,7 @@ sidebarDepth: 2
     - 13-01 
     - 13-02 :white_check_mark:
     - 13-03 
-    - 13-04 :ballot_box_with_check: 포켓몬 데이터 분석 추가하기
+    - 13-04 :ballot_box_with_check: 포켓몬 데이터 분석 추가하기!!!
     - 13-05 
 
 ## 데이터와 정보

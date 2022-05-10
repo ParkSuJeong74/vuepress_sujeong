@@ -44,6 +44,7 @@ module.exports = {
           { text: "Frontend", link: "/study/frontend" },
           { text: "DataAnalysis", link: "/study/dataAnalysis/" },
           { text: "CS", link: "/study/cs/" },
+          { text: "MachineLearning", link: "/study/machineLearning/" },
         ],
       },
       { text: "Project", link: "/project/" },
