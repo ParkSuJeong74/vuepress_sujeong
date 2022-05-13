@@ -10,7 +10,7 @@ sidebarDepth: 2
 2. 5주차
 3. 6주차
 4. 백엔드 스터디
-5. [NestJs Course for Beginners - Create a REST API](https://www.youtube.com/watch?v=GHTA143_b-s&t=11131s&ab_channel=freeCodeCamp.org&loop=0)
+5. [NestJS Tutorial](https://www.youtube.com/watch?v=Xhj2TgWLDAo&list=PL_cUvD4qzbkw-phjGK2qq0nQiG6gw1cKK&ab_channel=AnsontheDeveloper&loop=0)
 6. 노마더 코더 Nest.js로 API 만들기
 
 ## 파이썬이란?
@@ -71,34 +71,58 @@ import { AppService } from './app.service';
 @Module({
   imports: [],
   controllers: [AppController], // url를 가져오고 함수 실행(router)
-  providers: [AppService],      // 
+  providers: [AppService],  
 })
 export class AppModule {}
 ```
 
 - app.controller.ts
 
+url를 매핑, 리퀘스트 받기, query 넘김, body 등을 넘김
+
 ```ts
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';  // Post
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()      // get router
-  getHello(): string {
-    return this.appService.getHello();
-  }
-  
-  @Get('/hello') 
-  sayHello(): string {
-    return "hello everyone"
-  }
+    @Get()
+    getAll(){
+        return "This will return all movies"
+    }
+
+    @Get('search')  // id보다 위에 있어야함
+    search(@Query('year') searchingYear: string){   // search?year=2000
+        return `searching ${searchingYear}`
+    }
+
+    @Get(':id')
+    getOne(@Param("id") movieId:string){
+        return `This will return One movie id : ${movieId}`
+    }
+
+    @Post()
+    create(@Body() movieData){
+        return movieData
+    }
+
+    @Delete(':id')
+    remove(@Param("id") movieId:string){
+        return `This will delete One movie id : ${movieId}`
+    }
+
+    @Patch(':id')
+    patch(@Param('id') movieId: string, @Body() updateData){
+        return {
+            updateMovie: movieId,
+            ...updateData
+        }
 }
 ```
 
-Post를 쓰기 위해서는 Post를 import해주고 Post를 사용하면 된다. 해당 
+Post를 쓰기 위해서는 Post를 import해주고 Post를 사용하면 된다. 가령 Post로 바꾼다음 /hello 주소로 접속한다면 해당 오류를 볼 수 있다.
 
 ```
 {
@@ -108,4 +132,37 @@ Post를 쓰기 위해서는 Post를 import해주고 Post를 사용하면 된다.
 }
 ```
 
+Put은 모든 리소스를 업데이트한다. Patch는 리소스의 일부분만 업데이트 해준다.
+
 - app.service.ts
+
+controller와 비즈니스 로직을 구분하고자함. 실제로 함수를 가지는 부분이 서비스!
+
+로직을 관리하는 역할
+
+```ts
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  getHello(): string {
+    return 'Hello Nest!';
+  }
+  getHi(): string{
+    return "Hi Nest!"
+  }
+}
+```
+
+- app.controller.spec.ts
+
+테스트 파일
+
+CLI 명령어
+
+```shell
+$ nest g co         # generate controller
+$ nest g s          # generate service
+```
+
+*Single-responsibility principle : module, class, function이 하나의 기능은 반드시 책임져야한다.
