@@ -2,8 +2,6 @@
 next: true
 sidebarDepth: 2
 ---
-
-
 # DataAnalysis 실습
 
 excel(유용한 함수), python(인공지능, 데이터 분석 라이브러리 다수), r(라이브러리 다수), spss, sas
