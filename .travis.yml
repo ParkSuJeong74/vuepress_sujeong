@@ -7,12 +7,11 @@ install:
 
 script:
   - yarn docs:build
-
 deploy:
   provider: pages
   skip_cleanup: true
   local_dir: docs/.vuepress/dist
-  github_token: $GITHUB_TOKEN
+  github_token: $GITHUB_TOKEN # Travis CI에 등록한 토큰을 가져와 사용
   keep_history: true
   on:
-    branch: master
+    branch: master # master 브랜치에서만 동작하도록 설정
