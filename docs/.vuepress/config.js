@@ -54,16 +54,41 @@ module.exports = {
             { text: 'Contact', link: '/contact/' }
         ]
     },
-    plugins: [
-        ['@vuepress/pwa', {
-            serviceWorker: true,
-            updatePopup: true
-        }],
-        ['@vuepress/back-to-top'],
-        ['@vuepress/plugin-medium-zoom'],
-        //['vuepress-plugin-auto-sidebar']
+    nav: [
+      { text: "Home", link: "/" },
+      {
+        text: "Study",
+        items: [
+          { text: "Python", link: "/study/python/" },
+          { text: "DevOps", link: "/study/devOps/" },
+          { text: "Algorithm", link: "/study/algorithm/" },
+          { text: "Programming", link: "/study/programming" },
+          { text: "Web", link: "/study/web/" },
+          { text: "Backend", link: "/study/backend/" },
+          { text: "Frontend", link: "/study/frontend" },
+          { text: "DataAnalysis", link: "/study/dataAnalysis/" },
+          { text: "CS", link: "/study/cs/" },
+          { text: "MachineLearning", link: "/study/machineLearning/" },
+        ],
+      },
+      { text: "Project", link: "/project/" },
+      { text: "Column", link: "/column/" },
+      { text: "Contact", link: "/contact/" },
     ],
-    markdown: {
-        lineNumbers: true
-    }
-}
+  },
+  plugins: [
+    [
+      "@vuepress/pwa",
+      {
+        serviceWorker: true,
+        updatePopup: true,
+      },
+    ],
+    ["@vuepress/back-to-top"],
+    ["@vuepress/plugin-medium-zoom"],
+    //['vuepress-plugin-auto-sidebar']
+  ],
+  markdown: {
+    lineNumbers: true,
+  },
+};
