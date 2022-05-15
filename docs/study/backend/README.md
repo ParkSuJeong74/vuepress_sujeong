@@ -89,8 +89,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
     @Get()
-    getAll(){
-        return "This will return all movies"
+    getAll(): Movie[]{
+        return this.moviesServices.getAll()
     }
 
     @Get('search')  // id보다 위에 있어야함
@@ -99,26 +99,24 @@ export class AppController {
     }
 
     @Get(':id')
-    getOne(@Param("id") movieId:string){
-        return `This will return One movie id : ${movieId}`
+    getOne(@Param("id") movieId:string): Movie{
+        return this.moviesServices.getOne(movieId)
     }
 
     @Post()
     create(@Body() movieData){
-        return movieData
+        return this.moviesServices.create(movieData)
     }
 
     @Delete(':id')
     remove(@Param("id") movieId:string){
-        return `This will delete One movie id : ${movieId}`
+        return this.moviesServices.deleteOne(movieId)
     }
 
     @Patch(':id')
     patch(@Param('id') movieId: string, @Body() updateData){
-        return {
-            updateMovie: movieId,
-            ...updateData
-        }
+        return this.moviesServices.update(movieId, updateData)
+    }
 }
 ```
 
@@ -145,12 +143,36 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello Nest!';
-  }
-  getHi(): string{
-    return "Hi Nest!"
-  }
+  private movies: Movie[] = []
+  getAll(): Movie[] {
+        return this.movies
+    }
+
+    getOne(id:string): Movie{
+        const movie=this.movies.find(movie => movie.id === +id) // +id == parseInt(id)
+        if(!movie){
+            throw new NotFoundException(`Not Found Movie with ID : ${id}`) // 예외처리, httpExceptino에서 확장된 nest 기능
+        }
+        return movie
+    }
+
+    deleteOne(id:string) {
+        this.getOne(id)
+        this.movies=this.movies.filter(movie => movie.id !== +id)
+    }
+
+    create(movieData){
+        this.movies.push({
+            id: this.movies.length + 1,
+            ...movieData
+        })
+    }
+
+    update(id:string, updateData){
+        const movie = this.getOne(id)
+        this.deleteOne(id)
+        this.movies.push({...movie, ...updateData}) // 가짜 DB를 쓰기 때문에 사용하는 로직
+    }
 }
 ```
 
@@ -163,6 +185,93 @@ CLI 명령어
 ```shell
 $ nest g co         # generate controller
 $ nest g s          # generate service
+$ nest g mo         # generate module
 ```
 
 *Single-responsibility principle : module, class, function이 하나의 기능은 반드시 책임져야한다.
+
+NotFoundException() : 예외처리
+
+### Pipe
+
+코드가 지나가는 구간, 유효성 검사를 위한 파이프를 생성할 수 있다.
+
+express에서는 미들웨어에 속함
+
+```ts
+// main.ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule); 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // 어떤 decorator도 없는 property의 object는 거름
+      forbidNonWhitelisted: true,// 이상한걸 보내면 request를 막음
+      transform: true, // 원하는 타입으로 변환(id의 디폴트는 string이지만 이제 controller부터 number로 가져올 수 있음)
+    })
+  )
+  await app.listen(3000);
+}
+```
+
+### DTO(Data transfer Object) : 데이터 전송 객체
+
+전달해야하는 데이터, 전달 받아야하는 데이터 명시
+
+코드를 더 간결하게 만들 수 있도록 하는 역할, 쿼리의 유효성 검사 역할
+
+```ts
+export class CreateMovieDTO{
+    @IsString() // 유효성 검사
+    readonly title: string
+    @IsNumber()
+    readonly year: number
+    @IsString({each: true})  // each : 하나씩 검사
+    readonly genres: string[]
+}
+```
+
+update의 경우 필수가 아니어도 작동하도록 설정
+
+```ts
+import { IsNumber, IsString } from "class-validator"
+
+export class UpdateMovieDTO{
+    @IsString()
+    readonly title?: string // 필수는 아님
+
+    @IsNumber()
+    readonly year?: number
+
+    @IsOptional()
+    @IsString({each: true})  // each : 하나씩 검사
+    readonly genres?: string[]
+}
+```
+
+nest.js에서는 다르게도 가능하다.
+
+Partial types(부분 타입)을 사용하려면 @nestjs/mapped-types를 설치해야한다(swagger도 가능함)
+
+```ts
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateMovieDTO } from "./create-movie.dto";
+
+export class UpdateMovieDTO extends PartialType(CreateMovieDTO) {}
+```
+
+### Module
+
+dependency injection : class만 type으로 import
+ -> provider를 import하고 controller에 inject(주입)
+    @Injectable
+
+### Express
+
+Nest는 express 위에서 작동하기 때문에 req, res를 사용할 수 있다.
+
+```ts
+getAll(@Req() req, @Res() res): Movie[]
+```
+
+하지만 좋은 방식은 아니다. 대신 fastify로 전환할 수 있다.
+
