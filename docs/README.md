@@ -3,7 +3,7 @@
 <table>
     <tr>
         <td rowspan="2">
-            <img src="/images/titleImage.jpg" style="width: 230px;">
+            <img src="./.vuepress/public/images/titleImage.jpg" style="width: 230px;">
         </td>
         <td>
             <ul>
