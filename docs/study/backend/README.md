@@ -273,5 +273,38 @@ Nest는 express 위에서 작동하기 때문에 req, res를 사용할 수 있�
 getAll(@Req() req, @Res() res): Movie[]
 ```
 
-하지만 좋은 방식은 아니다. 대신 fastify로 전환할 수 있다.
+하지만 좋은 방식은 아니다. fastify로 전환할 수 있기 때문이다.(2배 정도 빠르다.) => Nest.js 방식만 사용하는게 좋다.
+
+### 테스트
+
+Jest : Js를 쉽게 테스팅하는 npm 패키지
+
+movies.controller.spec.ts 파일로 movies.controller.ts 파일을 테스트할 수 있다.
+
+npm run test:cov : 얼마나 테스팅 되었는지를 알려줌
+
+npm run test:watch : 모든 테스팅 파일을 찾아서 무슨일이 일어나는지 관찰 -> a를 누르면 전체 테스트
+
+테스팅 종류
+
+- 유닛 테스팅(서비스에서 분리된 유닛을 테스트, function 하나를 테스트)
+
+- end-to-end(e2e) 테스팅(모든 시스템 테스트, 특정 페이지가 나와야하는 경우 -> 사용자 관점에서 특정 링크를 클릭시 액센 테스트)
+
+
+**spec 파일**
+
+@describe : 테스트 묘사
+
+beforeEach : 테스르틑 하기 전에 실행하는 것
+
+```ts
+it('should be defined', () => { // individual test개별 테스트 줄임말
+    expect(service).toBeDefined();
+});
+
+it("should be 4", () => {
+    expect(2+2).toEqual(4) // 2+2가 4와 같기를 기대함
+}) // √ should be 4 (4 ms) 결과 찍힘
+```
 
