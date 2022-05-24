@@ -13,14 +13,23 @@ sidebarDepth: 2
 5. [NestJS Tutorial](https://www.youtube.com/watch?v=Xhj2TgWLDAo&list=PL_cUvD4qzbkw-phjGK2qq0nQiG6gw1cKK&ab_channel=AnsontheDeveloper&loop=0)
 6. 노마더 코더 Nest.js로 API 만들기
 
-## 파이썬이란?
+## Node.js 기초
 
-### Python 개요
-파이썬Python은 인터프리터 언어이다. 한 줄씩 소스 코드를 해석해서 바로 실행하여 결과를 확인할 수 있다.
-구글에서 만들어진 50% 이상의 소프트웨어가 파이썬으로 만들어졌는데 예를 들어 Dropbox(파일 동기화 서비스), Django(웹 프레임워크)도 파이썬으로 만들어졌다.
-하지만 속도가 느린 것이 단점!
-따라서 다른 언어로 작성된 프로그램과 모듈들이 파이썬으로 재구성되고 있으며 간결한 문법으로 공동 작업과 유지보수가 편하다.
-확장성과 이식성이 높고 생태계가 활발한게 특징이다.
+### Node.js
+
+node.js 등장 배경
+
+복잡한 JS 실행을 위해 V8 → 어느 환경에서나 JS 실행 가능
+
+![image](https://user-images.githubusercontent.com/71163016/169000154-6b8707ae-6c5d-4883-9f8d-5ff3b3cbcd1e.png)
+
+![image](https://user-images.githubusercontent.com/71163016/169000238-7dded44b-78be-4c9a-ad8e-9cef813a3197.png)
+
+
+`Browser의 JS`는 브라우저에서만 실행되고 웹 내부에 제한된 동작이 있으며 front-end 개발자의 언어이다.
+
+`node.js`는 크로스 플랫폼 실행, 제한없는 동작, 다양한 어플리케이션 개발이 가능
+
 
 ## 노마더 코더 Nest.js로 API 만들기
 
@@ -293,10 +302,14 @@ npm run test:watch : 모든 테스팅 파일을 찾아서 무슨일이 일어나
 
 
 **spec 파일**
+ 
+유닛 테스트를 위한 파일
 
-@describe : 테스트 묘사
+describe : 테스트 묘사
 
-beforeEach : 테스르틑 하기 전에 실행하는 것
+beforeEach : 테스트를 하기 전에 실행하는 것
+
+afterAll, beforeAll, afterEach 같은 Hook
 
 ```ts
 it('should be defined', () => { // individual test개별 테스트 줄임말
@@ -307,4 +320,21 @@ it("should be 4", () => {
     expect(2+2).toEqual(4) // 2+2가 4와 같기를 기대함
 }) // √ should be 4 (4 ms) 결과 찍힘
 ```
+
+**test 폴더**
+
+e2e 테스트
+
+입력 받았을 때 출력을 주는지 전체 테스트
+
+```ts
+it('/ (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!');
+  });
+```
+
+테스팅 데이터베이스 : 
 
