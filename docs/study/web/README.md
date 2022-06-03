@@ -1,5 +1,6 @@
 ---
-sidebar: auto
+next: true
+sidebarDepth: 2
 ---
 # Javascript
 

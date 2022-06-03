@@ -25,10 +25,12 @@ module.exports = {
       ],
       "/study/algorithm/": ["", "algorithm2"],
       "/study/dataAnalysis/": ["", "dataAnalysis2"],
+      "/study/web/": ["", "web2"],
       "/study/backend/": [
         "",
         //'dataAnalysis2'
       ],
+      "/project/": ["", "project2"],
     },
     nav: [
       { text: "Home", link: "/" },

@@ -11,10 +11,11 @@
                     sujeong9158@gmail.com<br>
                     evergreen9158@naver.com
                 <li class="portfolio-category">Project</li>
-                    Happiness Ti : 행복도 설문조사 웹 사이트<br>
-                    Pupa : 개발자 포트폴리오 커뮤티니 웹 사이트
+                    ANA : 유기, 유실 동물을 위한 웹 서비스<br>
+                    Happiness Ti : 행복도 설문조사 웹 서비스<br>
+                    Pupa : 개발자 포트폴리오 커뮤티니 웹 서비스
                 <li class="portfolio-category">Status</li>
-                    현재 엘리스 AI트랙 4기 참여중
+                    현재 엘리스 AI트랙 4기 레이서 참여중
             </ul>
         </td>
     </tr>

@@ -1,7 +1,7 @@
 ---
 sidebar: auto
 ---
-# DataAnalysis
+# ANA-project
 
 데이터 분석 스터디(엘리스) 정리
 :::tip

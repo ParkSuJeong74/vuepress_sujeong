@@ -12,8 +12,12 @@ sidebarDepth: 2
 4. 백엔드 스터디
 5. [NestJS Tutorial](https://www.youtube.com/watch?v=Xhj2TgWLDAo&list=PL_cUvD4qzbkw-phjGK2qq0nQiG6gw1cKK&ab_channel=AnsontheDeveloper&loop=0)
 6. 노마더 코더 Nest.js로 API 만들기
+7. [INFLEARN 따라하며 배우는 NestJS](https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-%EB%84%A4%EC%8A%A4%ED%8A%B8-%EC%A0%9C%EC%9D%B4%EC%97%90%EC%8A%A4)
 
-## Node.js 기초
+## 웹 백엔드 스터디
+## 5주차
+## 6주차
+## 백엔드 스터디
 
 ### Node.js
 
@@ -45,11 +49,19 @@ vscode, node, insomnia
 ```shell
 $ npm i -g @nestjs/cli
 $ nest                     # 다른 커맨드들의 리스트 조회
-$ nest new project-name
+$ nest new project-name    # ./을 사용하면 현재 폴더를 nest로 만들어줌
 $ npm run start:dev
 ```
 
 ### 파일 구조
+
+CLI 명령어
+
+```shell
+$ nest g co         # generate controller
+$ nest g s          # generate service
+$ nest g mo         # generate module
+```
 
 - main.ts
 
@@ -131,7 +143,7 @@ export class AppController {
 
 Post를 쓰기 위해서는 Post를 import해주고 Post를 사용하면 된다. 가령 Post로 바꾼다음 /hello 주소로 접속한다면 해당 오류를 볼 수 있다.
 
-```
+```ts
 {
   "statusCode": 404,
   "message": "Cannot GET /hello",
@@ -188,14 +200,6 @@ export class AppService {
 - app.controller.spec.ts
 
 테스트 파일
-
-CLI 명령어
-
-```shell
-$ nest g co         # generate controller
-$ nest g s          # generate service
-$ nest g mo         # generate module
-```
 
 *Single-responsibility principle : module, class, function이 하나의 기능은 반드시 책임져야한다.
 
@@ -336,5 +340,281 @@ it('/ (GET)', () => {
   });
 ```
 
-테스팅 데이터베이스 : 
+## 따라하며 배우는 NestJS
+
+[해당 깃허브 바로가기](https://github.com/ParkSuJeong74/nestjs_postgresql)
+
+### NEST.JS 란?
+
+효율적이고 확장 가능한 NODE.JS 서버 측 애플리케이션을 구축하기위한 프레임워크.
+
+express HTTP 서버 프레임워크 + Fastify
+
+[Nest.js 철학]
+
+고도의 테스트와 확장 가능성, 느슨한 결합, 유지 관리가 쉬운 애플리케이션을 만들 수 있도록 즉시 사용가능한 애플리케이션 아키텍처를 제공. Angular에서 영감을 받음
+
+### 기본 구조
+
+- .eslintrc.js : 코드 규칙 라이브러리. ts를 사용하는 가이드라인 제시, 문법에 오류가 나면 알려줌
+
+- prettierrc : 코드 형식. 작은따옴표나 큰따옴표, indent값을 2로 할지 4로 할지 등등. 에러를 찾는 것이 아닌 코드 포맷터 역할
+
+- nest-cli.json : nest에서의 특정한 설정(src 안이 root이다 등등)
+
+- package.json : 라이브러리, 설정
+
+- src 폴더 : 대부분의 비즈니스 로직이 들어감
+
+### 애플리케이션 구조
+
+BoardModule : 게시글에 관련된 모듈(BoardController, BoardEntity, BoardService, BoardRepository, ValidationPipe)
+
+AuthModule : 게시글을 만드는 사람에 대한 인증 모듈(AuthController, UserEntity, AuthService, UserRepositroy, JWT, Passport)
+
+### Module(@Module)
+
+@Module 데코레이터로 주석이 달린 클래스. 메타데이터 제공
+
+하나 이상의 모듈(root 모듈)이 있어야함
+
+밀접하게 관련된 기능 집합. 하나의 모듈 폴더에 같은 기능이 들어감
+
+기본적으로 싱글톤으로 여러 모듈간에 쉽게 공급자의 동일한 인스턴스를 공유할 수 있음
+
+```shell
+$ nest g mo boards
+```
+
+### Controller(@Controller)
+
+들어오는 요청을 처리하고 클라이언트에 응답 반환
+
+Handler : @Get, @Post, @Delete 와 같은 컨트롤러 클래스 내의 메서드
+
+```shell
+$ nest g co boards    # controller와 테스트 파일, module에 controller 추가
+```
+
+### Providers&Service(@Injectable)
+
+Providers : 대부분 기본 Nest 클래스는 서비스, 리포지토리, 팩토리, 헬퍼 등 프로바이더로 취급
+
+종속성에 주입할 수 있다는 것
+
+객체는 서로 다양한 관계를 만들 수 있고 객체의 인스턴스를 연결하는 기능은 대부분 Nest 런타임 시스템에 위임
+
+즉 Controller에서 Service를 종속적으로 사용한다는 뜻이다.
+
+Service : @Injectable 데코레이터로 감싸져서 모듈에 제공됨 -> 전체에서 사용될 수 있음
+
+서비스는 컨트롤러에서 데이터의 유효성을 체크하거나 DB에 아이템을 생성하는 등의 작업을 하는 부분 처리
+
+Dependency Injection : Service에서 정의한 메소드를 controller에서 쓰는 것
+
+controller의 constructor에서 Private type의 파라미터로 프로퍼티를 넣어서 this.(type).메소드 형식으로 사용
+
+Provider 등록 : module에서 추가
+
+```shell
+$ nest g s boards    # service와 테스트 파일, module에 service 추가
+```
+
+접근제한자 private를 사용하여 controller에서 service를 등록
+
+```ts
+@Controller('boards')
+export class BoardsController {
+    constructor(private readonly boardService: BoardsService){}
+}
+```
+
+### 서비스 제작
+
+클라이언트에서 요청을 보내면 먼저 컨트롤러에 라우팅해서 해당 핸들러로 이동 -> 서비스로 들어가 로직을 처리해주고 컨트롤러에서 클라이언트로 결과값 보내줌
+
+게시물을 만든다면, 게시물의 모델을 만들어서 board.model.ts
+
+classes : 변수의 타입 체크와 인스턴스 생성
+
+interface : 변수의 타입만 체크
+
+공개 게시물과 비공개 게시물을 나누는 status를 주기 위해 도메인을 설정
+
+두 상태만 나올 수 있도록 enumeration 사용
+
+타입 설정
+
+ID는 DB에서 알아서 유니크한 값을 줌 -> 지금은 uuid 사용
+
+```shell
+$ npm install uuid --save
+```
+
+```ts
+import { v1 as uuid } from 'uuid'
+const board: Board = {
+    id: uuid(),
+    title,
+    description,
+    status: BoardStatus.PUBLIC
+}
+```
+
+express에서는 bodyParser 모듈을 이용해서 클라이언트에서 값을 받았지만, Nest에서는 @Body('title') title 로 가져옴
+
+prettier, eslint는 **npx eslint . --fix**로 실행
+
+### DTO(Data Transfer Object)
+
+계층간 데이터 교환을 위한 객체로 DB에서 데이터를 얻어 service나 controller 등으로 보낼 때 사용하는 객체
+
+데이터가 네트워크를 통해 전송되는 방법을 정의
+
+interface나 class를 이용해서 정의하는데 class를 추천 -> 런타임에서 작동하기 때문에 pipe 같은 기능을 이용할 때 더 유용합니다.
+
+쓰는 이유 : 데이터 유효성 체크에 효율적, 안정적인 코드, ts 타입으로 사용, 코드 수정에 용이
+
+property를 여러곳에서 사용중인데 수정하려고 하면 많이 고쳐줘야하기 때문에, 유지보수를 위해 DTO 사용
+
+특정한 게시글을 가져올때는 id type을 전달(@Params를 가져올때 전체를 가져오면 @Param() params: string[]으로 가져올 수 있음)
+
+
+### Pipe(@Injectable)
+
+data transformation, data validation을 위해서 사용됨
+
+컨트롤러 경로 처리기에 의해 처리되는 인수에 의해 작동
+
+메소드가 호출되기 직전에 파이프를 삽입하고 파이프는 메소드로 향하는 인수를 수신하고 이에 의해 작동함
+
+- data transformation : 입력 데이터를 원하는 형식으로 변환(문자열 -> 정수)
+
+- data validation : 입력데이터가 유효하지 않은 경우 에러를 발생
+
+-> Binding Pipes : 파이프 사용법
+
+- Handler-level pipes : **@UsePipes()** 데코레이터 사용. 이 파이프는 모든 파라미터에 적용됨. router하나에만 적용됨
+
+- parameter-level pipes : parameter 레벨의 파이프. 특정한 파라미터에만 적용됨 (@Body('title', ParameterPipe) title)
+
+- global-level pipes : 애플리케이션 레벨의 파이프. 클라이언트에서 들어오는 모든 요청에 적용됨. main.ts에 위치(app.useGlobalPipes(GlobalPipes))
+
+Built-in Pipes : Nest에서 만들어둔 6가지의 파이프
+
+- ValidationPipe : 유효성 체크
+
+- ParseIntPipe : 숫자가 와야하는 핸들러일때 사용
+
+- ParseBoolPipe
+
+- ParseArrayPipe
+
+- ParseUUIDPipe
+
+- DefaultValuePipe
+
+Pipe 생성 - 유효성 체크
+
+```shell
+npm install class-validator class-transformer --save
+```
+
+[유효성 검사할 때 참고](https://github.com/typestack/class-validator#manual-validation)
+
+커스텀 파이프 : PipeTransform 인터페이스, transform 메소드
+
+transform() 메소드는 처리가 된 인자의 값value, 인자에 대한 메타데이터를 포함한 객체를 파라미터로 가짐 -> return이 된 값은 route 핸들러로 전해지고, 예외Exception 발생시 클라이언트로 전달
+
+metadata: ArgumentMetadata로 설정하면 matatype, type(body 등), data를 저장함
+
+상태가 public과 private만 가능하게 유효성 검사할 수 있음
+
+
+### PostgreSQL
+
+[postgresql](https://www.postgresql.org/download/windows/) + [pgAdmin](https://www.pgadmin.org/download/) 설치
+
+pdAdmin : 웹 브라우저 기반 데이터베이스 관리 GUI이다.
+
+server에 DB 생성!
+
+### typeORM
+
+객체 관계형 매퍼 라이브러리(mySQL, Postgres, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL)
+
+ORM : 객체와 관계형 데이터베이스 데이터를 자동으로 연결하는 작업
+
+모델을 기반으로 테이블 체계를 자동 생성. 데이터베이스에서 개체를 쉽게 삽입하고 업데이트, 삭제할 수 있으며, 테이블 간의 매핑도 만듬. CLI 제공
+
+```shell
+$ npm install pg typeorm@0.2 @nestjs/typeorm --save
+```
+
+### Entity
+
+@Entity() : 클래스가 엔티티
+
+@PrimaryGeneratedColumn() : 기본키
+
+@Column() : 열
+
+### Repository
+
+entity 개체와 함께 작동하며 엔티티 찾기, 삽입, 삭제 처리
+
+repository pattern : 데이터베이스에 관련된 일을 서비스가 하지 않고 repository에서 함(insert, find, delete)
+
+@EntityRepository() : custom 저장소로 선언하는데 사용됨
+
+async - await : 데이터베이스 작업이 끝난 후 결과값 받음
+
+### Log
+
+로그 종류
+
+Log : 중요한 정보의 범용 로깅
+
+Warning : 치명적이거나 파괴적이진 않는 처리되지 않은 문제
+
+Error : 치명적이거나 파괴적인 처리되지 않은 문제
+
+Debug : 오류 발생시 로직을 디버그하는데 도움이 되는 유용한 정보
+
+Verbose : 응용 프로그램의 동작에 대한 통찰력을 제공하는 정보
+
+로그 레벨
+
+Development : Log, Error, Warning, Debug, Verbose
+
+Staging : Log, Error, Warning
+
+Production : Log, Error
+
+Nest에는 built-in된 Logger 클래스가 있음!
+
+### Configuration
+
+runtime 도중에 바뀌는 것이 아니라 애플리케이션이 시작될 때 로드되어 정의해줘야함
+
+Codebase : 노출이 되어도 상관없는 정보들
+
+Environment Variables : 비밀번호나 API Key 같은 노출되면 안되는 정보들
+
+```shell
+$ npm install -g win-node-env
+$ npm install config --save
+```
+
+root 디렉토리에 config 폴더 안에 json이나 yaml 형식의 파일 생성
+
+- default.yaml :  기본 설정(개발 환경 설정이나 운영 환경 설정에도 적용됨)
+
+- development.yaml : default에서 설정 + 개발 환경에서 필요한 정보
+
+- production.yaml : default에서 설정 + 운영 환경에서 필요한 정보
+
+jwt expiresIn : 3600으로 하면 한시간
+
+db: synchronize : true로 하면 시작할때마다 entity 생성
 
