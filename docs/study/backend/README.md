@@ -548,8 +548,14 @@ ORM : 객체와 관계형 데이터베이스 데이터를 자동으로 연결하
 모델을 기반으로 테이블 체계를 자동 생성. 데이터베이스에서 개체를 쉽게 삽입하고 업데이트, 삭제할 수 있으며, 테이블 간의 매핑도 만듬. CLI 제공
 
 ```shell
-$ npm install pg typeorm@0.2 @nestjs/typeorm --save
+$ npm install pg typeorm @nestjs/typeorm --save
 ```
+
+- remove() : 무조건 존재하는 아이템을 지움(에러 발생) 
+
+- delete() : 아이템이 존재하면 지우고 아니면 아무런 영향이 없음
+
+remove를 사용하면 아이템의 유무를 확인하고 지우기, 즉 두번 데이터 베이스에 접근해야함!
 
 ### Entity
 
@@ -565,9 +571,55 @@ entity 개체와 함께 작동하며 엔티티 찾기, 삽입, 삭제 처리
 
 repository pattern : 데이터베이스에 관련된 일을 서비스가 하지 않고 repository에서 함(insert, find, delete)
 
-@EntityRepository() : custom 저장소로 선언하는데 사용됨
+@EntityRepository() : custom 저장소로 선언하는데 사용됨(버전 업그레이드 되면서 사용 안됨)
+
+[공식문서 참고](https://docs.nestjs.com/recipes/sql-typeorm)
 
 async - await : 데이터베이스 작업이 끝난 후 결과값 받음
+
+### 유저 데이터 유효성 체크
+
+Class-validator
+
+try catch문을 사용해서 원하는 status 코드와 문구를 줄 수 있다.
+
+### 암호화
+
+bcryptjs 
+
+```shell
+$ npm install bcryptjs --save
+```
+
+import * as bcrypt from 'bcryptjs'로 사용한다.
+
+비밀번호를 데이터베이스에 저장하는 두가지 방법
+
+Encryption Key와 함께 양방향으로 암호화(알고리즘 + 암호화 키) : 어떤 암호를 이용해서 비밀번호를 암호화하고 그 암호를 이용해서 복호화(키가 노출되면 위험함)
+
+SHA256 등으로 해시Hash해서 저장(단방향) : 복호화 불가능
+
+-> 레인보우 테이블을 만들어서 암호화된 비밀번호를 비교해서 비밀번호 알아내야함(비슷한 암호를 사용해서 보안 취약) -> salt + 비밀번호를 암호화해서 저장함
+
+### JWT
+
+Json Web Token : 당사자 간에 정보를 json 개체로 안전하게 전송하기 위한 컴팩트하고 독립적인 방식을 정의하는 개방형 표준RFC7519. 이 정보는 디지털 서명이 되어 있어 확인하고 신뢰할 수 있음
+
+권한을 체크하기 위해 사용함
+
+- Header : 토큰에 대한 메타 데이터 포함(타입, 해싱 알고리즘, SHA256, RSA...)
+
+- Payload : 유저 정보(issuer), 만료 기간(expiration time), 주제(subject)
+
+- Verify Signature : 토큰이 보낸 사람에 의해 서명되었으며 어떤 식으로 변경되지 않았는지 확인하는 서명.
+
+[jwt](https://jwt.io/)
+
+유저가 로그인하면 토큰을 생성함(hashing 알고리즘으로 jwt) -> 토큰 보관
+
+서버에서 요청에서 같이 온 header와 payload를 가져오고 서버안에 가지고 있는 secret를 이용해서 signature 부분을 다시 생성. 일치하면 통과
+
+
 
 ### Log
 
